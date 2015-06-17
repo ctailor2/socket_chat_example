@@ -23,6 +23,10 @@
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
       var socket = io();
+      socket.on('join chat', function(){
+        var username = prompt('Enter your username');
+        socket.emit('enter username', username);
+      });
       $('form').submit(function(){
         socket.emit('chat message', $('#m').val());
         $('#m').val('');
