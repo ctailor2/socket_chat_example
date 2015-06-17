@@ -2,6 +2,7 @@
   "name": "socket_chat_example",
   "version": "0.0.1",
   "description": "my first socket.io app",
-  "dependencies": {}
+  "dependencies": {
+    "express": "^4.10.2"
+  }
 }
-
