@@ -10,6 +10,7 @@
       form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
       #messages { list-style-type: none; margin: 0; padding: 0; }
       #messages li { padding: 5px 10px; }
+      #messages li.room { font-style: italic; }
       #messages li:nth-child(odd) { background: #eee; }
     </style>
   </head>
@@ -29,6 +30,9 @@
       });
       socket.on('chat message', function(msg){
         $('#messages').append($('<li>').text(msg));
+      });
+      socket.on('room message', function(msg){
+        $('#messages').append($("<li class='room'>").text(msg));
       });
     </script>
   </body>
