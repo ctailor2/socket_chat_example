@@ -4,21 +4,44 @@
     <title>Socket.IO chat</title>
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
-      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+      body { font: 13px Helvetica, Arial; padding-bottom: 70px; }
       #messages { list-style-type: none; margin: 0; padding: 0; }
       #messages li { padding: 5px 10px; }
       #messages li.room { font-style: italic; }
       #messages li:nth-child(odd) { background: #eee; }
+      #m { width: 720px; }
     </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   </head>
   <body>
-    <ul id="messages"></ul>
-    <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+          <ul id="messages"></ul>
+          <nav class="navbar navbar-default navbar-fixed-bottom">
+            <div class="row">
+              <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+              </div>
+              <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                <form class="navbar-form navbar-left" action="">
+                  <div class="form-group">
+                    <input class="form-control" id="m" autocomplete="off" />
+                  </div>
+                  <button class="btn btn-default">Send</button>
+                </form>
+              </div>
+              <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+              </div>
+            </div>
+          </nav>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        </div>
+      </div>
+    </div>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
