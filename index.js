@@ -12,12 +12,13 @@ io.on('connect', function(socket){
   socket.emit('join chat');
 
   socket.on('enter username', function(username){
-    io.emit('room message', username + ' connected');
     client = {
       id: socket.id,
       username: username
     };
     clients.push(client);
+    io.emit('room message', username + ' connected');
+    io.emit('update room members', clients);
   });
 
   socket.on('chat message', function(msg){
@@ -29,8 +30,9 @@ io.on('connect', function(socket){
       return client.id == socket.id;
     })[0];
     clientIndex = clients.indexOf(client);
-    io.emit('room message', client.username + ' disconnected');
     clients.splice(clientIndex, 1);
+    io.emit('room message', client.username + ' disconnected');
+    io.emit('update room members', clients);
   });
 });
 

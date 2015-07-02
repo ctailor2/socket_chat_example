@@ -10,8 +10,12 @@
       #messages li.room { font-style: italic; }
       #messages li:nth-child(odd) { background: #eee; }
       #m { width: 720px; }
+      #users { list-style-type: none; margin: 0; padding: 0; }
+      #users li { padding: 5px 10px; }
     </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   </head>
   <body>
@@ -39,11 +43,10 @@
           </nav>
         </div>
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+          <ul id="users"></ul>
         </div>
       </div>
     </div>
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
       var socket = io();
       socket.on('join chat', function(){
@@ -60,6 +63,13 @@
       });
       socket.on('room message', function(msg){
         $('#messages').append($("<li class='room'>").text(msg));
+      });
+      socket.on('update room members', function(clients){
+        list = ''
+        $.each(clients, function(index, element) {
+          list += '<li>' + element.username + '</li>'
+        });
+        $('#users').html(list)
       });
     </script>
   </body>
