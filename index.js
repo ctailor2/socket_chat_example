@@ -8,6 +8,13 @@ app.get('/', function(req, res){
 
 clients = []
 
+findEmittingClient = function(socketID, clients) {
+  client = clients.filter(function(client){
+    return client.id == socketID;
+  })[0];
+  return client;
+}
+
 io.on('connect', function(socket){
   socket.emit('join chat');
 
@@ -22,13 +29,12 @@ io.on('connect', function(socket){
   });
 
   socket.on('chat message', function(msg){
-    io.emit('chat message', msg);
+    client = findEmittingClient(socket.id, clients);
+    io.emit('chat message', client, msg);
   });
 
   socket.on('disconnect', function(){
-    client = clients.filter(function(client){
-      return client.id == socket.id;
-    })[0];
+    client = findEmittingClient(socket.id, clients);
     clientIndex = clients.indexOf(client);
     clients.splice(clientIndex, 1);
     io.emit('room message', client.username + ' disconnected');

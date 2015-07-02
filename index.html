@@ -9,6 +9,8 @@
       #messages li { padding: 5px 10px; }
       #messages li.room { font-style: italic; }
       #messages li:nth-child(odd) { background: #eee; }
+      #messages .chat .chat-user { width: 80px; float: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      #messages .chat .chat-msg { margin-left: 80px; padding-left: 10px; }
       #m { width: 720px; }
       #users { list-style-type: none; margin: 0; padding: 0; }
       #users li { padding: 5px 10px; }
@@ -53,17 +55,27 @@
         var username = prompt('Enter your username');
         socket.emit('enter username', username);
       });
+
       $('form').submit(function(){
         socket.emit('chat message', $('#m').val());
         $('#m').val('');
         return false;
       });
-      socket.on('chat message', function(msg){
-        $('#messages').append($('<li>').text(msg));
+
+      socket.on('chat message', function(client, msg){
+        message = "<li class='chat'><div class='chat-user'>" +
+                  client.username +
+                  "</div>" +
+                  "<div class='chat-msg'>" +
+                  msg
+                  "</div></li>"
+        $('#messages').append(message);
       });
+
       socket.on('room message', function(msg){
         $('#messages').append($("<li class='room'>").text(msg));
       });
+
       socket.on('update room members', function(clients){
         list = ''
         $.each(clients, function(index, element) {
