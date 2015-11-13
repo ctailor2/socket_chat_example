@@ -62,9 +62,9 @@
         return false;
       });
 
-      socket.on('chat message', function(client, msg){
+      socket.on('chat message', function(user, msg){
         message = "<li class='chat'><div class='chat-user'>" +
-                  client.username +
+                  user.username +
                   "</div>" +
                   "<div class='chat-msg'>" +
                   msg
@@ -76,9 +76,9 @@
         $('#messages').append($("<li class='room'>").text(msg));
       });
 
-      socket.on('update room members', function(clients){
+      socket.on('update room members', function(users){
         list = ''
-        $.each(clients, function(index, element) {
+        $.each(users, function(index, element) {
           list += '<li>' + element.username + '</li>'
         });
         $('#users').html(list)

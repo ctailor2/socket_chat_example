@@ -1,44 +1,51 @@
 var app  = require('express')();
 var http = require('http').Server(app);
 var io   = require('socket.io')(http);
+var models = require("./models");
+
+models.sequelize.sync();
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
-clients = []
-
-findEmittingClient = function(socketID, clients) {
-  client = clients.filter(function(client){
-    return client.id == socketID;
-  })[0];
-  return client;
-}
-
 io.on('connect', function(socket){
   socket.emit('join chat');
 
   socket.on('enter username', function(username){
-    client = {
-      id: socket.id,
+    models.User.create({
+      socket_identifier: socket.id,
       username: username
-    };
-    clients.push(client);
-    io.emit('room message', username + ' connected');
-    io.emit('update room members', clients);
+    }).then(function(user){
+      io.emit('room message', user.username + ' connected');
+      models.User.findAll().then(function(users){
+        io.emit('update room members', users);
+      });
+    })
   });
 
   socket.on('chat message', function(msg){
-    client = findEmittingClient(socket.id, clients);
-    io.emit('chat message', client, msg);
+    models.User.findOne({
+      where: {
+        socket_identifier: socket.id
+      }
+    }).then(function(user){
+      io.emit('chat message', user, msg);
+    })
   });
 
   socket.on('disconnect', function(){
-    client = findEmittingClient(socket.id, clients);
-    clientIndex = clients.indexOf(client);
-    clients.splice(clientIndex, 1);
-    io.emit('room message', client.username + ' disconnected');
-    io.emit('update room members', clients);
+    models.User.findOne({
+      where: {
+        socket_identifier: socket.id
+      }
+    }).then(function(user){
+      user.destroy();
+      io.emit('room message', user.username + ' disconnected');
+      models.User.findAll().then(function(users){
+        io.emit('update room members', users);
+      });
+    });
   });
 });
 

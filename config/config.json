@@ -2,7 +2,7 @@
   "development": {
     "username": "chiragtailor",
     "password": null,
-    "database": "database_development",
+    "database": "socket_chat_example",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
