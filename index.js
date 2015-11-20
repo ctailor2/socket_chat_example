@@ -3,10 +3,15 @@ var http = require('http').Server(app);
 var io   = require('socket.io')(http);
 var models = require("./models");
 
+// set up the views dir and template engine
+app.set('views', './views');
+app.set('view engine', 'jade');
+
+// sync up the model definitions
 models.sequelize.sync();
 
 app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
+  res.render('index');
 });
 
 io.on('connect', function(socket){

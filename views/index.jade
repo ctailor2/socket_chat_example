@@ -1,8 +1,8 @@
-<!doctype html>
-<html>
-  <head>
-    <title>Socket.IO chat</title>
-    <style>
+doctype html
+html(lang="en")
+  head
+    title Socket.IO chat
+    style.
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; padding-bottom: 70px; }
       #messages { list-style-type: none; margin: 0; padding: 0; }
@@ -11,45 +11,30 @@
       #messages li:nth-child(odd) { background: #eee; }
       #messages .chat .chat-user { width: 80px; float: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
       #messages .chat .chat-msg { margin-left: 80px; padding-left: 10px; }
-      #m { width: 720px; }
+      #m { width: 1170px; }
       #users { list-style-type: none; margin: 0; padding: 0; }
       #users li { padding: 5px 10px; }
-    </style>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  </head>
-  <body>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-        </div>
-        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-          <ul id="messages"></ul>
-          <nav class="navbar navbar-default navbar-fixed-bottom">
-            <div class="row">
-              <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-              </div>
-              <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-                <form class="navbar-form navbar-left" action="">
-                  <div class="form-group">
-                    <input class="form-control" id="m" autocomplete="off" />
-                  </div>
-                  <button class="btn btn-default">Send</button>
-                </form>
-              </div>
-              <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-              </div>
-            </div>
-          </nav>
-        </div>
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-          <ul id="users"></ul>
-        </div>
-      </div>
-    </div>
-    <script>
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css')
+    script(src='https://cdn.socket.io/socket.io-1.2.0.js')
+    script(src='http://code.jquery.com/jquery-1.11.1.js')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
+  body
+    .row
+      .col-lg-2.col-md-2.col-sm-2.col-xs-2
+      .col-lg-8.col-md-8.col-sm-8.col-xs-8
+        ul#messages
+        nav.navbar.navbar-default.navbar-fixed-bottom
+          .row
+            .col-lg-2.col-md-2.col-sm-2.col-xs-2
+            .col-lg-8.col-md-8.col-sm-8.col-xs-8
+              form.navbar-form.navbar-left(action='')
+                .form-group
+                  input.form-control#m(autocomplete='off')
+                button.btn.btn-default Send
+            .col-lg-2.col-md-2.col-sm-2.col-xs-2
+      .col-lg-2.col-md-2.col-sm-2.col-xs-2
+        ul#users
+    script(type='text/javascript').
       var socket = io();
       socket.on('join chat', function(){
         var username = prompt('Enter your username');
@@ -83,6 +68,3 @@
         });
         $('#users').html(list)
       });
-    </script>
-  </body>
-</html>
